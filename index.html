@@ -3,100 +3,157 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ทายนิสัยคนรักที่คู่ควร</title>
+    <title>ค้นหาความรักที่ใช่ 💖</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Kanit', sans-serif;
             text-align: center;
-            margin: 50px;
-            background-color: #fef5e7;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ffe6e9, #ffccf2);
+            color: #ff5e78;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
         .container {
             background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: inline-block;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
         h1 {
-            color: #e17055;
-        }
-        .description {
-            font-size: 14px;
-            color: #636e72;
+            font-size: 2.5em;
             margin-bottom: 20px;
+            color: #ff4d6d;
         }
-        .traits {
-            text-align: left;
-            margin: 0 auto;
-            max-width: 300px;
+        .question {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #555;
         }
-        .traits label {
-            display: block;
-            margin-bottom: 10px;
-        }
-        button {
-            font-size: 18px;
+        .choices button {
+            font-size: 1.2em;
             padding: 10px 20px;
             border: none;
-            border-radius: 5px;
+            border-radius: 30px;
             cursor: pointer;
-            background: #55efc4;
+            background: linear-gradient(45deg, #ff4d6d, #ff758f);
             color: white;
+            margin: 10px;
+            transition: all 0.3s ease;
         }
-        button:hover {
-            background: #00cec9;
+        .choices button:hover {
+            background: linear-gradient(45deg, #ff758f, #ff4d6d);
+            transform: scale(1.1);
+            box-shadow: 0 4px 10px rgba(255, 80, 100, 0.5);
         }
         .result {
             margin-top: 20px;
-            font-size: 18px;
+            font-size: 1.5em;
             color: #0984e3;
+            font-weight: bold;
+            animation: fadeIn 1s ease-in-out;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: #555;
+        }
+        .footer a {
+            color: #ff5e78;
+            text-decoration: none;
+        }
+        .footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>ทายนิสัยคนรักที่คู่ควร ❤️</h1>
-        <p class="description">เลือก 3 ลักษณะนิสัยที่ตรงกับตัวคุณมากที่สุด</p>
-        
-        <div class="traits">
-            <label><input type="checkbox" value="ความอบอุ่น"> ความอบอุ่น</label>
-            <label><input type="checkbox" value="ความมั่นคง"> ความมั่นคง</label>
-            <label><input type="checkbox" value="ความคิดสร้างสรรค์"> ความคิดสร้างสรรค์</label>
-            <label><input type="checkbox" value="การสื่อสารที่ดี"> การสื่อสารที่ดี</label>
-            <label><input type="checkbox" value="ความใส่ใจ"> ความใส่ใจ</label>
-            <label><input type="checkbox" value="ความทะเยอทะยาน"> ความทะเยอทะยาน</label>
+        <h1>ค้นหาความรักที่ใช่ 💖</h1>
+        <p class="question">คำถามที่ 1: เมื่อคุณคิดถึงตัวเอง คุณเห็นอะไรในตัวเองมากที่สุด?</p>
+        <div class="choices">
+            <button onclick="selectTrait('อบอุ่นและน่าเชื่อถือ')">อบอุ่นและน่าเชื่อถือ</button>
+            <button onclick="selectTrait('มีความคิดสร้างสรรค์')">มีความคิดสร้างสรรค์</button>
+            <button onclick="selectTrait('มองโลกในแง่ดี')">มองโลกในแง่ดี</button>
         </div>
-
-        <button onclick="predictLove()">ทำนาย</button>
-
-        <div class="result"></div>
     </div>
 
     <script>
-        function predictLove() {
-            const traits = document.querySelectorAll('.traits input:checked');
-            if (traits.length !== 3) {
-                document.querySelector('.result').textContent = "❌ กรุณาเลือก 3 ลักษณะนิสัย";
-                return;
-            }
+        const questions = [
+            { question: "คำถามที่ 1: เมื่อคุณคิดถึงตัวเอง คุณเห็นอะไรในตัวเองมากที่สุด?", choices: ["อบอุ่นและน่าเชื่อถือ", "มีความคิดสร้างสรรค์", "มองโลกในแง่ดี"] },
+            { question: "คำถามที่ 2: ถ้าคุณต้องการความรัก คุณอยากได้คนที่...", choices: ["เข้าใจและสนับสนุนคุณ", "ชอบผจญภัยและทำสิ่งใหม่ ๆ", "มั่นคงและจริงใจ"] },
+            { question: "คำถามที่ 3: ลักษณะใดที่คุณให้ความสำคัญในคนรัก?", choices: ["อารมณ์ขัน", "ความใส่ใจ", "ความโรแมนติก"] }
+        ];
 
-            const selectedTraits = Array.from(traits).map(t => t.value);
+        let currentQuestionIndex = 0;
+        let selectedTraits = [];
 
-            // อ้างอิงจากงานวิจัย เช่น Big Five หรือความสมดุลในความสัมพันธ์
-            let result = '';
-            if (selectedTraits.includes('ความอบอุ่น') && selectedTraits.includes('ความใส่ใจ')) {
-                result = 'คนรักที่เหมาะสมควรเป็นคนที่มี "ความใส่ใจ" และ "สนับสนุนอารมณ์" ของคุณ ❤️';
-            } else if (selectedTraits.includes('ความคิดสร้างสรรค์')) {
-                result = 'คนรักที่เหมาะสมควรมี "จินตนาการกว้างไกล" และชอบทำสิ่งใหม่ๆ กับคุณ 💡';
-            } else if (selectedTraits.includes('ความมั่นคง')) {
-                result = 'คุณต้องการคนรักที่ให้ "ความมั่นคง" และพร้อมเดินเคียงข้างในทุกสถานการณ์ 🤝';
+        function selectTrait(trait) {
+            selectedTraits.push(trait);
+
+            // ไปคำถามถัดไปหรือแสดงผลลัพธ์
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
             } else {
-                result = 'คนรักที่คู่ควรควรเป็นคนที่ "เข้าใจ" และ "สนับสนุน" คุณในทุกด้าน ✨';
+                showResult();
+            }
+        }
+
+        function loadQuestion() {
+            const container = document.querySelector('.container');
+            const questionData = questions[currentQuestionIndex];
+
+            container.innerHTML = `
+                <h1>ค้นหาความรักที่ใช่ 💖</h1>
+                <p class="question">${questionData.question}</p>
+                <div class="choices">
+                    ${questionData.choices.map(choice => `<button onclick="selectTrait('${choice}')">${choice}</button>`).join('')}
+                </div>
+            `;
+        }
+
+        function showResult() {
+            const container = document.querySelector('.container');
+            
+            // ผลลัพธ์
+            let result = '';
+            if (selectedTraits.includes('อบอุ่นและน่าเชื่อถือ') && selectedTraits.includes('ความใส่ใจ')) {
+                result = '💖 คนรักของคุณควรเป็นผู้ที่เติมเต็มความใส่ใจ และโอบอ้อมอารีในหัวใจ ❤️';
+            } else if (selectedTraits.includes('มีความคิดสร้างสรรค์')) {
+                result = '✨ คนรักของคุณควรมีความคิดสร้างสรรค์และพร้อมผจญภัยในโลกกว้างกับคุณ 💡';
+            } else if (selectedTraits.includes('มองโลกในแง่ดี')) {
+                result = '🤝 คุณต้องการคู่ที่มั่นคง และเปี่ยมด้วยพลังแห่งความไว้วางใจ';
+            } else {
+                result = '✨ ความรักที่คู่ควรควรเป็นความสัมพันธ์ที่สร้างความเข้าใจและความสุขร่วมกัน';
             }
 
-            document.querySelector('.result').textContent = result;
+            container.innerHTML = `
+                <h1>ผลลัพธ์ของคุณ ❤️</h1>
+                <p class="result">${result}</p>
+                <p>คุณเลือกนิสัย: ${selectedTraits.join(", ")}</p>
+                <button onclick="shareResult()">แชร์ผลลัพธ์</button>
+            `;
+        }
+
+        function showResult() {
+            let result = selectedTraits.join(", ");
+
+            // ไปยังหน้า result.html และส่งค่าผลลัพธ์ไปด้วย
+            window.location.href = `result.html?result=${encodeURIComponent(result)}`;
         }
     </script>
 

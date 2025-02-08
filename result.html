@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ผลลัพธ์ความรักของคุณ 💖</title>
+    <style>
+        body {
+            font-family: 'Kanit', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ffccf2, #ffe6e9);
+            color: #ff5e78;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            width: 90%;
+        }
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: #ff4d6d;
+        }
+        .result-text {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        .back-button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            background: linear-gradient(45deg, #ff4d6d, #ff758f);
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .back-button:hover {
+            background: linear-gradient(45deg, #ff758f, #ff4d6d);
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>💖 ผลลัพธ์ของคุณ 💖</h1>
+        <p class="result-text" id="result"></p>
+        <button class="back-button" onclick="goBack()">🔄 ทำแบบทดสอบใหม่</button>
+    </div>
+
+    <script>
+        // ดึงค่าผลลัพธ์จาก URL
+        const params = new URLSearchParams(window.location.search);
+        const resultText = params.get("result");
+
+        // แสดงผลลัพธ์
+        document.getElementById("result").textContent = `คุณเหมาะกับคนที่มีนิสัย: ${resultText}`;
+
+        function goBack() {
+            window.location.href = "index.html";
+        }
+    </script>
+
+</body>
+</html>
