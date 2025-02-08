@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สุ่มเลขลอตเตอรี่ สำหรับลิ้นจี่</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        h1 {
+            color: #333;
+        }
+        .lottery-number {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #d9534f;
+        }
+        button {
+            font-size: 18px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #5bc0de;
+            color: white;
+        }
+        button:hover {
+            background: #31b0d5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>🎲 สุ่มเลขลอตเตอรี่ สำหรับลิ้นจี่ 🎲</h1>
+        <div class="lottery-number">000000</div>
+        <button onclick="generateLottery()">สุ่มเลข</button>
+    </div>
+
+    <script>
+        function generateLottery() {
+            let number = Math.floor(100000 + Math.random() * 900000); // สุ่มเลข 6 หลัก
+            document.querySelector(".lottery-number").textContent = number;
+        }
+    </script>
+
+</body>
+</html>
