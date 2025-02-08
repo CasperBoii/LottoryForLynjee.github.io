@@ -8,8 +8,6 @@
         body {
             font-family: 'Kanit', sans-serif;
             text-align: center;
-            margin: 0;
-            padding: 0;
             background: linear-gradient(to bottom, #ffe6e9, #ffccf2);
             color: #ff5e78;
             min-height: 100vh;
@@ -17,94 +15,106 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
         }
         .container {
             background: white;
-            padding: 30px;
+            padding: 20px;
             border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
             max-width: 600px;
             width: 90%;
-            animation: fadeIn 1s ease-in-out;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
         }
         h1 {
-            font-size: 2.5em;
-            margin-bottom: 20px;
+            font-size: 2em;
+            margin-bottom: 10px;
             color: #ff4d6d;
         }
         .question {
-            font-size: 1.5em;
-            margin-bottom: 20px;
+            font-size: 1.2em;
+            margin-bottom: 15px;
             color: #555;
         }
         .choices button {
-            font-size: 1.2em;
-            padding: 10px 20px;
+            font-size: 1em;
+            padding: 12px;
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             cursor: pointer;
             background: linear-gradient(45deg, #ff4d6d, #ff758f);
             color: white;
-            margin: 10px;
-            transition: all 0.3s ease;
+            margin: 5px;
+            width: 100%;
+            max-width: 300px;
         }
         .choices button:hover {
             background: linear-gradient(45deg, #ff758f, #ff4d6d);
-            transform: scale(1.1);
-            box-shadow: 0 4px 10px rgba(255, 80, 100, 0.5);
-        }
-        .result {
-            margin-top: 20px;
-            font-size: 1.5em;
-            color: #0984e3;
-            font-weight: bold;
-            animation: fadeIn 1s ease-in-out;
-        }
-        .footer {
-            margin-top: 30px;
-            font-size: 0.9em;
-            color: #555;
-        }
-        .footer a {
-            color: #ff5e78;
-            text-decoration: none;
-        }
-        .footer a:hover {
-            text-decoration: underline;
+            transform: scale(1.05);
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" id="quiz-container">
         <h1>ค้นหาความรักที่ใช่ 💖</h1>
-        <p class="question">คำถามที่ 1: เมื่อคุณคิดถึงตัวเอง คุณเห็นอะไรในตัวเองมากที่สุด?</p>
-        <div class="choices">
-            <button onclick="selectTrait('อบอุ่นและน่าเชื่อถือ')">อบอุ่นและน่าเชื่อถือ</button>
-            <button onclick="selectTrait('มีความคิดสร้างสรรค์')">มีความคิดสร้างสรรค์</button>
-            <button onclick="selectTrait('มองโลกในแง่ดี')">มองโลกในแง่ดี</button>
-        </div>
+        <p class="question" id="question-text"></p>
+        <div class="choices" id="choices-container"></div>
     </div>
 
     <script>
+        function isMobileDevice() {
+            return /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        }
+
+        function applyLayout() {
+            const container = document.getElementById("quiz-container");
+            if (isMobileDevice()) {
+                container.style.maxWidth = "90%";
+            } else {
+                container.style.maxWidth = "600px";
+            }
+        }
+
         const questions = [
-            { question: "คำถามที่ 1: เมื่อคุณคิดถึงตัวเอง คุณเห็นอะไรในตัวเองมากที่สุด?", choices: ["อบอุ่นและน่าเชื่อถือ", "มีความคิดสร้างสรรค์", "มองโลกในแง่ดี"] },
-            { question: "คำถามที่ 2: ถ้าคุณต้องการความรัก คุณอยากได้คนที่...", choices: ["เข้าใจและสนับสนุนคุณ", "ชอบผจญภัยและทำสิ่งใหม่ ๆ", "มั่นคงและจริงใจ"] },
-            { question: "คำถามที่ 3: ลักษณะใดที่คุณให้ความสำคัญในคนรัก?", choices: ["อารมณ์ขัน", "ความใส่ใจ", "ความโรแมนติก"] }
+            { question: "เมื่ออยู่ในกลุ่มเพื่อน คุณเป็นคนแบบไหน?", choices: [
+                { text: "ชอบเข้าสังคม 🗣️", type: "extraversion" },
+                { text: "ชอบฟังมากกว่าพูด 🎧", type: "agreeableness" },
+                { text: "สังเกตการณ์และวิเคราะห์ 🔍", type: "openness" }
+            ]},
+            { question: "เมื่อเจอปัญหาความสัมพันธ์ คุณมักจะ?", choices: [
+                { text: "พูดคุยและแก้ไข 🤝", type: "secure" },
+                { text: "พยายามทำให้เขารู้สึกดีขึ้น 💕", type: "anxious" },
+                { text: "หลีกเลี่ยงปัญหา 😶", type: "avoidant" }
+            ]},
+            { question: "คุณให้ความสำคัญกับอะไรในความรัก?", choices: [
+                { text: "ความซื่อสัตย์และมั่นคง ❤️", type: "secure" },
+                { text: "ความใส่ใจและโรแมนติก 💞", type: "anxious" },
+                { text: "อิสระและพื้นที่ส่วนตัว 🛤️", type: "avoidant" }
+            ]},
+            { question: "เมื่อรู้สึกเครียด คุณจัดการอย่างไร?", choices: [
+                { text: "ระบายกับเพื่อน 🗣️", type: "extraversion" },
+                { text: "อยู่คนเดียวเพื่อสงบใจ 😌", type: "openness" },
+                { text: "ออกไปทำกิจกรรมใหม่ ๆ 🎢", type: "secure" }
+            ]}
         ];
 
         let currentQuestionIndex = 0;
-        let selectedTraits = [];
+        let scores = { extraversion: 0, agreeableness: 0, openness: 0, secure: 0, anxious: 0, avoidant: 0 };
 
-        function selectTrait(trait) {
-            selectedTraits.push(trait);
+        function loadQuestion() {
+            document.getElementById("question-text").textContent = questions[currentQuestionIndex].question;
+            const choicesContainer = document.getElementById("choices-container");
+            choicesContainer.innerHTML = "";
 
-            // ไปคำถามถัดไปหรือแสดงผลลัพธ์
+            questions[currentQuestionIndex].choices.forEach(choice => {
+                const button = document.createElement("button");
+                button.textContent = choice.text;
+                button.onclick = function() { selectTrait(choice.type); };
+                choicesContainer.appendChild(button);
+            });
+        }
+
+        function selectTrait(type) {
+            scores[type]++;
             currentQuestionIndex++;
             if (currentQuestionIndex < questions.length) {
                 loadQuestion();
@@ -113,48 +123,13 @@
             }
         }
 
-        function loadQuestion() {
-            const container = document.querySelector('.container');
-            const questionData = questions[currentQuestionIndex];
-
-            container.innerHTML = `
-                <h1>ค้นหาความรักที่ใช่ 💖</h1>
-                <p class="question">${questionData.question}</p>
-                <div class="choices">
-                    ${questionData.choices.map(choice => `<button onclick="selectTrait('${choice}')">${choice}</button>`).join('')}
-                </div>
-            `;
-        }
-
         function showResult() {
-            const container = document.querySelector('.container');
-            
-            // ผลลัพธ์
-            let result = '';
-            if (selectedTraits.includes('อบอุ่นและน่าเชื่อถือ') && selectedTraits.includes('ความใส่ใจ')) {
-                result = '💖 คนรักของคุณควรเป็นผู้ที่เติมเต็มความใส่ใจ และโอบอ้อมอารีในหัวใจ ❤️';
-            } else if (selectedTraits.includes('มีความคิดสร้างสรรค์')) {
-                result = '✨ คนรักของคุณควรมีความคิดสร้างสรรค์และพร้อมผจญภัยในโลกกว้างกับคุณ 💡';
-            } else if (selectedTraits.includes('มองโลกในแง่ดี')) {
-                result = '🤝 คุณต้องการคู่ที่มั่นคง และเปี่ยมด้วยพลังแห่งความไว้วางใจ';
-            } else {
-                result = '✨ ความรักที่คู่ควรควรเป็นความสัมพันธ์ที่สร้างความเข้าใจและความสุขร่วมกัน';
-            }
-
-            container.innerHTML = `
-                <h1>ผลลัพธ์ของคุณ ❤️</h1>
-                <p class="result">${result}</p>
-                <p>คุณเลือกนิสัย: ${selectedTraits.join(", ")}</p>
-                <button onclick="shareResult()">แชร์ผลลัพธ์</button>
-            `;
+            let highestTrait = Object.keys(scores).reduce((a, b) => scores[a] > scores[b] ? a : b);
+            window.location.href = `result.html?trait=${encodeURIComponent(highestTrait)}`;
         }
 
-        function showResult() {
-            let result = selectedTraits.join(", ");
-
-            // ไปยังหน้า result.html และส่งค่าผลลัพธ์ไปด้วย
-            window.location.href = `result.html?result=${encodeURIComponent(result)}`;
-        }
+        applyLayout();
+        loadQuestion();
     </script>
 
 </body>
