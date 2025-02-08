@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>สุ่มเลขลอตเตอรี่ สำหรับลิ้นจี่</title>
+    <title>ทายนิสัยคนรักที่คู่ควร</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 50px;
-            background-color: #f4f4f4;
+            background-color: #fef5e7;
         }
         .container {
             background: white;
@@ -19,13 +19,21 @@
             display: inline-block;
         }
         h1 {
-            color: #333;
+            color: #e17055;
         }
-        .lottery-number {
-            font-size: 36px;
-            font-weight: bold;
-            margin: 20px 0;
-            color: #d9534f;
+        .description {
+            font-size: 14px;
+            color: #636e72;
+            margin-bottom: 20px;
+        }
+        .traits {
+            text-align: left;
+            margin: 0 auto;
+            max-width: 300px;
+        }
+        .traits label {
+            display: block;
+            margin-bottom: 10px;
         }
         button {
             font-size: 18px;
@@ -33,26 +41,62 @@
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            background: #5bc0de;
+            background: #55efc4;
             color: white;
         }
         button:hover {
-            background: #31b0d5;
+            background: #00cec9;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 18px;
+            color: #0984e3;
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>🎲 สุ่มเลขลอตเตอรี่ สำหรับลิ้นจี่ 🎲</h1>
-        <div class="lottery-number">000000</div>
-        <button onclick="generateLottery()">สุ่มเลข</button>
+        <h1>ทายนิสัยคนรักที่คู่ควร ❤️</h1>
+        <p class="description">เลือก 3 ลักษณะนิสัยที่ตรงกับตัวคุณมากที่สุด</p>
+        
+        <div class="traits">
+            <label><input type="checkbox" value="ความอบอุ่น"> ความอบอุ่น</label>
+            <label><input type="checkbox" value="ความมั่นคง"> ความมั่นคง</label>
+            <label><input type="checkbox" value="ความคิดสร้างสรรค์"> ความคิดสร้างสรรค์</label>
+            <label><input type="checkbox" value="การสื่อสารที่ดี"> การสื่อสารที่ดี</label>
+            <label><input type="checkbox" value="ความใส่ใจ"> ความใส่ใจ</label>
+            <label><input type="checkbox" value="ความทะเยอทะยาน"> ความทะเยอทะยาน</label>
+        </div>
+
+        <button onclick="predictLove()">ทำนาย</button>
+
+        <div class="result"></div>
     </div>
 
     <script>
-        function generateLottery() {
-            let number = Math.floor(100000 + Math.random() * 900000); // สุ่มเลข 6 หลัก
-            document.querySelector(".lottery-number").textContent = number;
+        function predictLove() {
+            const traits = document.querySelectorAll('.traits input:checked');
+            if (traits.length !== 3) {
+                document.querySelector('.result').textContent = "❌ กรุณาเลือก 3 ลักษณะนิสัย";
+                return;
+            }
+
+            const selectedTraits = Array.from(traits).map(t => t.value);
+
+            // อ้างอิงจากงานวิจัย เช่น Big Five หรือความสมดุลในความสัมพันธ์
+            let result = '';
+            if (selectedTraits.includes('ความอบอุ่น') && selectedTraits.includes('ความใส่ใจ')) {
+                result = 'คนรักที่เหมาะสมควรเป็นคนที่มี "ความใส่ใจ" และ "สนับสนุนอารมณ์" ของคุณ ❤️';
+            } else if (selectedTraits.includes('ความคิดสร้างสรรค์')) {
+                result = 'คนรักที่เหมาะสมควรมี "จินตนาการกว้างไกล" และชอบทำสิ่งใหม่ๆ กับคุณ 💡';
+            } else if (selectedTraits.includes('ความมั่นคง')) {
+                result = 'คุณต้องการคนรักที่ให้ "ความมั่นคง" และพร้อมเดินเคียงข้างในทุกสถานการณ์ 🤝';
+            } else {
+                result = 'คนรักที่คู่ควรควรเป็นคนที่ "เข้าใจ" และ "สนับสนุน" คุณในทุกด้าน ✨';
+            }
+
+            document.querySelector('.result').textContent = result;
         }
     </script>
 
